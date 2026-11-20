@@ -1,0 +1,209 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Plus Jakarta Sans", "Cairo", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", "Cairo", system-ui, sans-serif;
+  --font-arabic: "Cairo", "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --color-obsidian-950: #0D1B2A;
+  --color-obsidian-900: #102A3A;
+  --color-obsidian-800: #152B3C;
+  --color-luminous-cyan: #28E7DE;
+  --color-brand-turquoise: #1AB8B0;
+  --color-aqua-soft: #68C5C2;
+  --color-royal-gold: #D4AF37;
+  --color-gold-soft: #F3D37A;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: #0D1B2A;
+    color: #F4FAFF;
+    color-scheme: dark;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  :lang(ar), [dir="rtl"] {
+    font-family: var(--font-arabic);
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.font-arabic {
+  font-family: var(--font-arabic);
+}
+
+.reveal-mask {
+  overflow: hidden;
+}
+
+/* Unified solid rich deep-teal / turquoise brand color for paired Hero titles */
+.text-brand-turquoise {
+  color: #20C4BC;
+  text-shadow:
+    0 2px 14px rgba(13, 27, 42, 0.72),
+    0 0 22px rgba(32, 196, 188, 0.34);
+}
+
+/* GPU-composited continuous rotating border beam around translucent frosted glass cards */
+@keyframes border-beam-spin {
+  from {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
+@keyframes subtle-shimmer {
+  0% {
+    transform: translate3d(-135%, 0, 0) skewX(-18deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(235%, 0, 0) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes card-glow-pulse {
+  0% {
+    opacity: 0;
+  }
+  28% {
+    opacity: 0.72;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes soft-aura-breathe {
+  0%, 100% {
+    transform: scale(0.98) translateZ(0);
+    opacity: 0.78;
+  }
+  50% {
+    transform: scale(1.04) translateZ(0);
+    opacity: 1;
+  }
+}
+
+/* Perimeter-only masked border beam with paint containment for silky 60fps/120fps compositing */
+.glow-beam-card {
+  position: relative;
+  isolation: isolate;
+  contain: layout style;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.glow-beam-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
+  contain: strict;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.glow-beam-rotor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 185%;
+  aspect-ratio: 1 / 1;
+  background: conic-gradient(
+    from 0deg,
+    rgba(45, 224, 214, 0.14) 0deg,
+    rgba(45, 224, 214, 0.16) 175deg,
+    rgba(56, 240, 232, 0.72) 255deg,
+    rgba(190, 252, 248, 0.96) 308deg,
+    rgba(56, 240, 232, 0.52) 338deg,
+    rgba(45, 224, 214, 0.14) 360deg
+  );
+  animation: border-beam-spin 9.5s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+
+.glow-beam-rotor-fast {
+  animation-duration: 6s;
+}
+
+.glow-beam-rotor-gold {
+  background: conic-gradient(
+    from 90deg,
+    rgba(64, 226, 218, 0.16) 0deg,
+    rgba(64, 226, 218, 0.18) 170deg,
+    rgba(243, 211, 122, 0.88) 268deg,
+    rgba(92, 244, 236, 0.94) 322deg,
+    rgba(64, 226, 218, 0.16) 360deg
+  );
+}
+
+/* Lighter semi-transparent frosted-glass cards harmonizing with mid-deep teal-slate backdrop */
+.glass-surface {
+  background-color: rgba(18, 45, 62, 0.46);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.glass-surface-deep {
+  background-color: rgba(18, 45, 62, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.card-entry-pulse {
+  animation: card-glow-pulse 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity;
+}
+
+.btn-shimmer-streak {
+  animation: subtle-shimmer 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.soft-aura-breathe {
+  animation: soft-aura-breathe 4.6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-beam-rotor,
+  .btn-shimmer-streak,
+  .card-entry-pulse,
+  .soft-aura-breathe {
+    animation: none !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
